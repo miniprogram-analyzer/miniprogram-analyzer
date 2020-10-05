@@ -1,7 +1,7 @@
 {
-  "name": "plato-mini-program",
+  "name": "miniprogram-analyzer",
   "version": "0.0.1",
-  "description": "mini-program analyzer based on plato",
+  "description": "miniprogram analyzer based on plato",
   "main": "index.js",
   "scripts": {
     "test": "mocha",
