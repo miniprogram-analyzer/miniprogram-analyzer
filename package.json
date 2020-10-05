@@ -1,12 +1,11 @@
 {
-  "name": "miniprogram-analyzer",
+  "name": "miniprogram-analyzer2",
   "version": "0.0.1",
   "description": "miniprogram analyzer based on plato",
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "program": "node index.js",
-    "snippet": "node snippet.js"
+    "example:seed": "node bin/index.js analyze example/seed"
   },
   "keywords": [
     "mini-program",
