@@ -1,14 +1,16 @@
 {
   "name": "miniprogram-analyzer2",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "miniprogram analyzer based on plato",
   "main": "index.js",
+  "bin": "bin/index.js",
   "scripts": {
     "test": "mocha",
     "example:seed": "node bin/index.js analyze example/seed"
   },
   "keywords": [
-    "mini-program",
+    "miniprogram",
+    "anzlyzer",
     "plato"
   ],
   "author": "LanceZhu",
