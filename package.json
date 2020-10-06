@@ -1,6 +1,6 @@
 {
   "name": "miniprogram-analyzer2",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "miniprogram analyzer based on plato",
   "main": "index.js",
   "bin": "bin/index.js",
@@ -33,6 +33,7 @@
     "mocha": "^6.2.0"
   },
   "files": [
-    "bin", "src"
+    "bin",
+    "src"
   ]
 }
