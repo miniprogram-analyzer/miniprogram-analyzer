@@ -2,10 +2,11 @@
 
 const { program } = require('commander')
 const { inspect } = require('../src/program')
+const pkgJSON = require('../package.json')
 
 program
-  .version('0.0.1')
-  .name('mp-analyze')
+  .version(pkgJSON.version)
+  .name(pkgJSON.name)
 
 program
   .command('analyze [mpDir]')
