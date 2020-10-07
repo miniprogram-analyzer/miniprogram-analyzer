@@ -5,17 +5,34 @@ const path = require('path')
 const getUsedComponents = require('./html/component')
 
 const inspect = async (mpDir, reportDir, options = {}) => {
-  const appJSONPath = path.join(mpDir, 'app.json')
+  const projectConfigJSONPath = path.join(mpDir, './project.config.json')
+  let appJSONPath = path.join(mpDir, 'app.json')
+  let miniprogramRoot = mpDir
+  let cloudfunctionRoot = path.join(mpDir, 'cloudfunctions')
+
+  if (!fse.existsSync(projectConfigJSONPath)) {
+    if (!fse.existsSync(appJSONPath)) {
+      console.warn('Error: project.config.json & app.json are not exist!')
+      console.warn(`  mpDir: ${mpDir}`)
+      return
+    }
+  } else {
+    const projectConfigJSON = fse.readJsonSync(projectConfigJSONPath)
+    miniprogramRoot = path.join(mpDir, projectConfigJSON.miniprogramRoot || '')
+    cloudfunctionRoot = path.join(mpDir, projectConfigJSON.cloudfunctionRoot || 'cloudfunctions')
+  }
+
+  appJSONPath = path.join(miniprogramRoot, 'app.json')
   if (!fse.existsSync(appJSONPath)) {
     console.warn('Error: app.json is not exist!')
-    console.warn(`  mpDir: ${mpDir}`)
+    console.warn(`  miniprogramRoot: ${miniprogramRoot}`)
     return
   }
 
   const appJSON = fse.readJSONSync(appJSONPath)
   const mpPages = appJSON.pages
 
-  const hasCloudFunction = fse.existsSync(path.join(mpDir, 'cloudfunctions'))
+  const hasCloudFunction = fse.existsSync(cloudfunctionRoot)
 
   const outputDir = reportDir || path.join(process.cwd(), 'report', path.basename(mpDir))
 
@@ -34,7 +51,7 @@ const inspect = async (mpDir, reportDir, options = {}) => {
     })
   })
 
-  const usedComponents = await getUsedComponents(mpDir)
+  const usedComponents = await getUsedComponents(miniprogramRoot)
 
   const report = {
     pages: mpPages,

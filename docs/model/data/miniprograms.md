@@ -1,6 +1,6 @@
 # 微信小程序项目列表
 
-[mp-list.txt](./mp-list.txt)
+[miniprograms.txt](./miniprograms.txt)
 
 格式：`Git 仓库链接列表`
 
