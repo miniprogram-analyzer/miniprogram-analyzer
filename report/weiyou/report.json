@@ -21,6 +21,7 @@
     "wx.createAnimation": 2,
     "wx.setNavigationBarTitle": 2
   },
+  "CSSLOC": 121,
   "plato": [
     {
       "info": {
