@@ -77,12 +77,13 @@ Type: `object`
 
 :point_right: 示例： [report/weiyou/reports.json](./report/weiyou/report.json)
 
-| 指标             | 说明           |
-| ---------------- | -------------- |
-| pages            | 页面列表       |
-| hasCloudFunction | 是否使用云开发 |
-| components       | 使用到的组件   |
-| plato            | plato 相关     |
+| 指标             | 说明               |
+| ---------------- | ------------------ |
+| pages            | 页面列表           |
+| hasCloudFunction | 是否使用云开发     |
+| components       | 使用到的组件       |
+| wxAPIs           | 使用到的小程序 API |
+| plato            | plato 相关         |
 
 ### plato 生成页面指标说明
 
