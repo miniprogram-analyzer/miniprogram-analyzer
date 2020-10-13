@@ -9,13 +9,13 @@ const getUsedComponents = async (mpDir) => {
   const components = {}
 
   const globbyOptions = {
-    cwd: mpDir ? mpDir : process.cwd()
+    cwd: mpDir || process.cwd()
   }
   const filePattern = '**/*.wxml'
   const htmlFiles = globby.sync([filePattern], globbyOptions)
 
   const next = async (fileIndex) => {
-    if(fileIndex >= htmlFiles.length) {
+    if (fileIndex >= htmlFiles.length) {
       return components
     }
 
@@ -24,14 +24,13 @@ const getUsedComponents = async (mpDir) => {
     const htmlStream = fs.createReadStream(filePath)
     const parserStream = new htmlparser2.WritableStream({
       onopentagname (name) {
-        components[name] = components[name] ? ++components[name] : 1 
+        components[name] = components[name] ? ++components[name] : 1
       }
     })
     return new Promise((resolve, reject) => {
       htmlStream.pipe(parserStream).on('finish', async () => {
         resolve(await next(++fileIndex))
       })
-
     })
   }
 

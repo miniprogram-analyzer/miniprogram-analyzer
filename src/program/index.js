@@ -3,6 +3,7 @@ const fse = require('fs-extra')
 const path = require('path')
 
 const getUsedComponents = require('./html/component')
+const getUsedWxAPIs = require('./javascript/api')
 
 const inspect = async (mpDir, reportDir, options = {}) => {
   const projectConfigJSONPath = path.join(mpDir, './project.config.json')
@@ -52,11 +53,13 @@ const inspect = async (mpDir, reportDir, options = {}) => {
   })
 
   const usedComponents = await getUsedComponents(miniprogramRoot)
+  const usedWxAPis = getUsedWxAPIs(miniprogramRoot)
 
   const report = {
     pages: mpPages,
     hasCloudFunction,
     components: usedComponents,
+    wxAPIs: usedWxAPis,
     plato: platoReport
   }
 

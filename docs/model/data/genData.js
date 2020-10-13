@@ -2,9 +2,8 @@ const fse = require('fs-extra')
 const os = require('os')
 const path = require('path')
 const { inspect: mpAnalyzer } = require('../../../src/program/index')
-const { execSync, exec } = require('child_process')
+const { execSync } = require('child_process')
 const globby = require('globby')
-const { errorMonitor } = require('stream')
 
 const collectRepo = (githubRepo, repoDir) => {
   fse.ensureDirSync(repoDir)
@@ -21,13 +20,13 @@ const collectRepo = (githubRepo, repoDir) => {
 const collectMP = (repoDir, mpDir) => {
   fse.ensureDirSync(mpDir)
   fse.emptyDirSync(mpDir)
-  
+
   const mpRootDir = getMPRootDir(repoDir)
   console.log(mpRootDir, mpDir)
   fse.copySync(mpRootDir, mpDir)
 }
 
-const getMPRootDir= (repoDir) => {
+const getMPRootDir = (repoDir) => {
   const globbyOptions = {
     cwd: repoDir
   }
@@ -63,9 +62,9 @@ const saveReport = (fd, report, index) => {
 }
 
 const genData = async (githubRepos, miniprogramsDir, resultPath) => {
-  for(let i=0; i<githubRepos.length; i++){
+  for (let i = 0; i < githubRepos.length; i++) {
     const dataIndex = i + 1
-    
+
     console.log(`=> genData ${dataIndex}`)
 
     const dataDir = path.join(miniprogramsDir, String(dataIndex))
@@ -80,12 +79,11 @@ const genData = async (githubRepos, miniprogramsDir, resultPath) => {
       console.log(`    > collectMP ${repoDir} to ${mpDir}`)
       collectMP(repoDir, mpDir)
 
-
       console.log(`    > analyze ${repoDir}, report ${mpDir}`)
       const report = await mpAnalyzer(mpDir, reportDir)
-      
+
       saveReport(resultPath, report, dataIndex)
-    } catch(err) {
+    } catch (err) {
       console.error(err)
     }
 
@@ -93,7 +91,6 @@ const genData = async (githubRepos, miniprogramsDir, resultPath) => {
     console.log()
     console.log()
   }
-
 }
 
 const githubReposTXT = path.join(path.resolve(__dirname), 'miniprograms.txt')
