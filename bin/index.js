@@ -14,8 +14,8 @@ program
   .option('-o, --output [report directory]', 'report directory path')
   .action(async (mpDir, options) => {
     mpDir = mpDir || options.input || process.cwd()
-    reportDir = options.output
+    const reportDir = options.output
     await inspect(mpDir, reportDir)
   })
 
-program.parse(process.argv);
+program.parse(process.argv)

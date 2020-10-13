@@ -15,6 +15,12 @@
     "navigator": 4,
     "image": 12
   },
+  "wxAPIs": {
+    "wx.request": 1,
+    "wx.getSystemInfo": 2,
+    "wx.createAnimation": 2,
+    "wx.setNavigationBarTitle": 2
+  },
   "plato": [
     {
       "info": {
