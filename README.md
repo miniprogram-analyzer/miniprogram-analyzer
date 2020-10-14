@@ -83,7 +83,7 @@ Type: `object`
 | hasCloudFunction | 是否使用云开发                         |
 | components       | 使用到的组件                           |
 | wxAPIs           | 使用到的小程序 API                     |
-|                  | wxss 代码行数（经过 stylelint 格式化） |
+| CSSLOC           | wxss 代码行数（经过 stylelint 格式化） |
 | plato            | plato 相关                             |
 
 ### plato 生成页面指标说明

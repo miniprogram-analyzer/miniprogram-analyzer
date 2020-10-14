@@ -1,4 +1,4 @@
-const plato = require('plato')
+const plato = require('plato-cn')
 const fse = require('fs-extra')
 const path = require('path')
 
