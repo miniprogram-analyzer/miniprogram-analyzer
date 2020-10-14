@@ -23,7 +23,9 @@
     "fs-extra": "^9.0.1",
     "globby": "^11.0.1",
     "htmlparser2": "^4.1.0",
-    "plato": "git+https://github.com/LanceZhu/plato.git#template-zh-CN"
+    "plato": "git+https://github.com/LanceZhu/plato.git#template-zh-CN",
+    "stylelint": "^13.7.2",
+    "stylelint-config-standard": "^20.0.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
@@ -33,9 +35,7 @@
     "eslint-plugin-node": "^9.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
-    "mocha": "^6.2.0",
-    "stylelint": "^13.7.2",
-    "stylelint-config-standard": "^20.0.0"
+    "mocha": "^6.2.0"
   },
   "files": [
     "bin",
