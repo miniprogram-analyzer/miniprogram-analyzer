@@ -1,6 +1,6 @@
 {
   "name": "miniprogram-analyzer2",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "miniprogram analyzer based on plato",
   "main": "index.js",
   "bin": "bin/index.js",
