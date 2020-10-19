@@ -23,6 +23,7 @@ module.exports = {
     wx: "writable",
     App: "writable",
     Page: 'writable',
-    getApp: "writable"
+    getApp: "writable",
+    Component: 'writable'
   }
 }
