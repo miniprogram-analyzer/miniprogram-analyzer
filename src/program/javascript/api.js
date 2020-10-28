@@ -4,6 +4,7 @@ const types = require('@babel/types')
 const globby = require('globby')
 const path = require('path')
 const fs = require('fs')
+const { ignoreRegex } = require('../../config/ignore/index')
 
 const getUsedWxAPIs = (mpDir) => {
   const APIs = {}
@@ -12,7 +13,8 @@ const getUsedWxAPIs = (mpDir) => {
     cwd: mpDir || process.cwd()
   }
   const filePattern = '**/*.js'
-  const jsFiles = globby.sync([filePattern], globbyOptions)
+  let jsFiles = globby.sync([filePattern], globbyOptions)
+  jsFiles = jsFiles.filter(jsFile => !ignoreRegex.test(jsFile))
 
   const next = fileIndex => {
     if (fileIndex >= jsFiles.length) {

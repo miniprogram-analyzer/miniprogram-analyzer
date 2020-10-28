@@ -4,6 +4,7 @@ const htmlparser2 = require('htmlparser2')
 const globby = require('globby')
 const object = require('lodash/object')
 const tokens = require('./tokens')
+const { ignoreRegex } = require('../../config/ignore/index')
 
 const getUsedComponents = async (mpDir) => {
   const components = {}
@@ -12,7 +13,8 @@ const getUsedComponents = async (mpDir) => {
     cwd: mpDir || process.cwd()
   }
   const filePattern = '**/*.wxml'
-  const htmlFiles = globby.sync([filePattern], globbyOptions)
+  let htmlFiles = globby.sync([filePattern], globbyOptions)
+  htmlFiles = htmlFiles.filter(htmlFile => !ignoreRegex.test(htmlFile))
 
   const next = async (fileIndex) => {
     if (fileIndex >= htmlFiles.length) {

@@ -1,7 +1,9 @@
+// GitHub 仓库链接
+// =>
+// 微信小程序代码
 const fse = require('fs-extra')
 const os = require('os')
 const path = require('path')
-const { inspect: mpAnalyzer } = require('../../../src/program/index')
 const { execSync } = require('child_process')
 const globby = require('globby')
 
@@ -9,7 +11,7 @@ const collectRepo = (githubRepo, repoDir) => {
   fse.ensureDirSync(repoDir)
   fse.emptyDirSync(repoDir)
 
-  const cmd = `git clone ${githubRepo} ${repoDir}`
+  const cmd = `git clone ${githubRepo} ${repoDir} --depth=1`
   try {
     execSync(cmd)
   } catch (err) {
@@ -43,46 +45,32 @@ const getMPRootDir = (repoDir) => {
   }
 }
 
-const saveReport = (fd, report, index) => {
-  const { pages, components, hasCloudFunction } = report
-
-  const componentsCount = Object.values(components).reduce((acc, cur) => {
-    acc += cur
-    return acc
-  }, 0)
-
-  const formatedReport = [
-    index,
-    pages.length,
-    componentsCount,
-    hasCloudFunction ? 1 : 0
-  ]
-  fse.appendFileSync(fd, formatedReport.join(','))
-  fse.appendFileSync(fd, os.EOL)
-}
-
-const genData = async (githubRepos, miniprogramsDir, resultPath) => {
+const repos2mp = async (githubRepos, miniprogramsDir) => {
   for (let i = 0; i < githubRepos.length; i++) {
     const dataIndex = i + 1
 
-    console.log(`=> genData ${dataIndex}`)
+    // 跳过已知存在问题仓库
+    if (
+      dataIndex === 77 ||
+      dataIndex === 84 ||
+      dataIndex === 30 ||
+      dataIndex === 100
+    ) {
+      continue
+    }
+
+    console.log(`=> repos2mp ${dataIndex}`)
 
     const dataDir = path.join(miniprogramsDir, String(dataIndex))
     const githubRepo = githubRepos[i]
     const repoDir = path.join(dataDir, 'repo')
     const mpDir = path.join(dataDir, 'miniprogram')
-    const reportDir = path.join(dataDir, 'report')
     try {
       console.log(`    > collectRepo ${githubRepo} to ${repoDir}`)
       collectRepo(githubRepo, repoDir)
 
       console.log(`    > collectMP ${repoDir} to ${mpDir}`)
       collectMP(repoDir, mpDir)
-
-      console.log(`    > analyze ${repoDir}, report ${mpDir}`)
-      const report = await mpAnalyzer(mpDir, reportDir)
-
-      saveReport(resultPath, report, dataIndex)
     } catch (err) {
       console.error(err)
     }
@@ -95,13 +83,11 @@ const genData = async (githubRepos, miniprogramsDir, resultPath) => {
 
 const githubReposTXT = path.join(path.resolve(__dirname), 'miniprograms.txt')
 const miniprogramsDir = path.join(path.resolve(__dirname), 'miniprograms')
-const resultPath = path.join(path.resolve(__dirname), 'data.csv')
 
 const githubReposBuffer = fse.readFileSync(githubReposTXT)
 const githubRepos = githubReposBuffer.toString('utf8').split(os.EOL);
 
 (async () => {
   fse.ensureDirSync(miniprogramsDir)
-  fse.emptyDirSync(miniprogramsDir)
-  await genData(githubRepos, miniprogramsDir, resultPath)
+  await repos2mp(githubRepos, miniprogramsDir)
 })()

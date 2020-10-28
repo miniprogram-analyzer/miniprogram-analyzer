@@ -1,6 +1,7 @@
 const plato = require('plato-cn')
 const fse = require('fs-extra')
 const path = require('path')
+const { ignoreRegex } = require('../config/ignore/index')
 
 const getUsedComponents = require('./html/component')
 const getUsedWxAPIs = require('./javascript/api')
@@ -41,8 +42,13 @@ const inspect = async (mpDir, reportDir, options = {}) => {
   fse.ensureDirSync(outputDir)
   fse.emptyDirSync(outputDir)
 
+  // ignore:
+  //   node_modules
+  //   miniprogram_npm
   const { platoOptions = {
-    recurse: true
+    recurse: true,
+    // exclude: /(.*?)(node_modules|miniprogram_npm)(.*?)/
+    exclude: ignoreRegex
   } } = options
 
   const platoReport = await new Promise((resolve, reject) => {
