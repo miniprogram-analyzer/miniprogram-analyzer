@@ -1,12 +1,14 @@
 import tensorflow as tf   # 使用tensorflow1.9版本
 import csv
 import numpy as np
-from keras.utils import to_categorical
+from keras.utils import to_categorical # version: 2.2 与 tensorflow 1.9 兼容
+import matplotlib
+matplotlib.use("Agg") # non-GUI env
 import matplotlib.pyplot as plt
 
 
 # 数据文件路径
-path = "C:/Users/12542/Desktop/新建文件夹/report.csv"
+path = "../data/report_with_label.csv"
 
 
 seed = 5
@@ -117,4 +119,5 @@ with tf.Session() as sess:
     plt.ylabel("Loss")
     plt.grid(True)
     plt.show()
+    plt.savefig('loss_of_samples')
 
