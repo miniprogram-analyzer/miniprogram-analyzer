@@ -4,7 +4,7 @@ const path = require('path')
 const { ignoreRegex } = require('../config/ignore/index')
 
 const getUsedComponents = require('./html/component')
-const getUsedWxAPIs = require('./javascript/api')
+const getASTInfo= require('./javascript/traverse')
 const getCSSLOC = require('./css/LOC.js')
 const getDuplications = require('./javascript/jscpd')
 
@@ -61,7 +61,7 @@ const inspect = async (mpDir, reportDir, options = {}) => {
   })
 
   const usedComponents = await getUsedComponents(miniprogramRoot)
-  const usedWxAPis = getUsedWxAPIs(miniprogramRoot)
+  const { APIs: usedWxAPis, LOC: JSLOC, commentLOC: JSCommentLOC } = getASTInfo(miniprogramRoot)
   const CSSLOC = await getCSSLOC(miniprogramRoot)
   const duplications = await getDuplications(miniprogramRoot, outputDir)
 
@@ -70,6 +70,8 @@ const inspect = async (mpDir, reportDir, options = {}) => {
     hasCloudFunction,
     components: usedComponents,
     wxAPIs: usedWxAPis,
+    JSLOC,
+    JSCommentLOC,
     CSSLOC,
     plato: platoReport,
     jscpd: duplications
