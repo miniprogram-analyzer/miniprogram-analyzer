@@ -6,8 +6,10 @@ const path = require('path')
 const fs = require('fs')
 const { ignoreRegex } = require('../../config/ignore/index')
 
-const getUsedWxAPIs = (mpDir) => {
+const getASTInfo = (mpDir) => {
   const APIs = {}
+  let LOC = 0
+  let commentLOC = 0
 
   const globbyOptions = {
     cwd: mpDir || process.cwd()
@@ -18,7 +20,11 @@ const getUsedWxAPIs = (mpDir) => {
 
   const next = fileIndex => {
     if (fileIndex >= jsFiles.length) {
-      return APIs
+      return {
+        APIs,
+        LOC,
+        commentLOC
+      }
     }
 
     const filePath = path.join(mpDir, jsFiles[fileIndex])
@@ -30,6 +36,13 @@ const getUsedWxAPIs = (mpDir) => {
     const ast = parser.parse(jsString, {
       sourceType: 'unambiguous'
     })
+
+    const { loc, comments } = ast
+    LOC += (loc.end.line - loc.start.line + 1)
+    commentLOC += comments.reduce((acc, cur) => {
+      acc += cur.loc.end.line - cur.loc.start.line + 1
+      return acc
+    }, 0)
 
     traverse(ast, {
       CallExpression (path) {
@@ -50,7 +63,11 @@ const getUsedWxAPIs = (mpDir) => {
 
   next(0)
 
-  return APIs
+  return {
+    APIs,
+    LOC,
+    commentLOC
+  }
 }
 
-module.exports = getUsedWxAPIs
+module.exports = getASTInfo
