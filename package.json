@@ -6,7 +6,7 @@
   "bin": "bin/index.js",
   "scripts": {
     "test": "mocha",
-    "example:seed": "node bin/index.js analyze example/seed"
+    "analyze:example": "node bin/index.js analyze example/weiyou"
   },
   "keywords": [
     "miniprogram",
@@ -23,6 +23,7 @@
     "fs-extra": "^9.0.1",
     "globby": "^11.0.1",
     "htmlparser2": "^4.1.0",
+    "jscpd": "^3.3.23",
     "plato-cn": "^1.6.0",
     "stylelint": "^13.7.2",
     "stylelint-config-standard": "^20.0.0"

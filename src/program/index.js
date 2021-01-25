@@ -6,6 +6,7 @@ const { ignoreRegex } = require('../config/ignore/index')
 const getUsedComponents = require('./html/component')
 const getUsedWxAPIs = require('./javascript/api')
 const getCSSLOC = require('./css/LOC.js')
+const getDuplications = require('./javascript/jscpd')
 
 const inspect = async (mpDir, reportDir, options = {}) => {
   const projectConfigJSONPath = path.join(mpDir, './project.config.json')
@@ -62,6 +63,7 @@ const inspect = async (mpDir, reportDir, options = {}) => {
   const usedComponents = await getUsedComponents(miniprogramRoot)
   const usedWxAPis = getUsedWxAPIs(miniprogramRoot)
   const CSSLOC = await getCSSLOC(miniprogramRoot)
+  const duplications = await getDuplications(miniprogramRoot, outputDir)
 
   const report = {
     pages: mpPages,
@@ -69,7 +71,8 @@ const inspect = async (mpDir, reportDir, options = {}) => {
     components: usedComponents,
     wxAPIs: usedWxAPis,
     CSSLOC,
-    plato: platoReport
+    plato: platoReport,
+    jscpd: duplications
   }
 
   fse.writeFileSync(path.join(outputDir, 'report.json'), JSON.stringify(report, null, 2))
