@@ -22,10 +22,10 @@ layer1 = 32
 # 输出的是成绩级别：合格，良，好，优秀
 output_node = 4
 # 学习率
-learning_rate = 0.0005
+learning_rate = 0.00001
 batch_size = 8
 # 训练次数
-steps = 1000
+steps = 10000
 # 训练集个数
 train_data_size = 80
 # 正则化参数
