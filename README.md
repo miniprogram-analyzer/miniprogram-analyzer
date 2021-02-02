@@ -85,6 +85,8 @@ Type: `object`
 | wxAPIs           | 使用到的小程序 API                     |
 | CSSLOC           | wxss 代码行数（经过 stylelint 格式化） |
 | plato            | plato 相关                             |
+|                  | js 代码行数                            |
+| JSCommentLOC     | js 代码注释行数                        |
 
 ### plato 生成页面指标说明
 
