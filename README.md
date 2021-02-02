@@ -33,6 +33,7 @@ $ node bin/index.js analyze example/weiyou
 
 ```md
 report/weiyou
+├── jscpd-report # jscpd 报告 https://github.com/kucherenko/jscpd
 ├── plato       # 分析报告 HTML
 └── report.json # 详细信息
 ```
